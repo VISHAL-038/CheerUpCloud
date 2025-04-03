@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CheerUpCloud ☁️</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+        }
+        .container {
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+        }
+        .btn-custom {
+            margin: 10px;
+            font-size: 1rem;
+            border-radius: 25px;
+            padding: 10px 15px;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        .btn-custom:hover {
+            transform: scale(1.05);
+        }
+        #hug img {
+            width: 100%;
+            max-width: 150px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .output {
+            margin-top: 20px;
+        }
+        iframe {
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16/9;
+        }
+        .message-box {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">CheerUpCloud ☁️</h1>
+        <p class="lead">Feeling down? Let’s brighten your day! ☀️</p>
+        
+        <div class="d-grid gap-2">
+            <button class="btn btn-primary btn-custom" onclick="getJoke()">😂 Tell Me a Joke</button>
+            <button class="btn btn-success btn-custom" onclick="getCuteAnimal()">🐶 Show Me Something Cute</button>
+            <button class="btn btn-warning btn-custom" onclick="showMessage()">💌 Send Me a Kind Message</button>
+            <button class="btn btn-danger btn-custom" onclick="showHug()">🤗 Virtual Hug</button>
+            <button class="btn btn-info btn-custom" onclick="surpriseMe()">🎁 Surprise Me!</button>
+        </div>
+        
+        <div id="output" class="output"></div>
+        
+        <h2 class="mt-5">🎶 Uplifting Song</h2>
+        <iframe src="https://www.youtube.com/embed/2Vv-BfVoq4g?si=Kt52y7wvd-WLx4Zi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    
+    <script>
+        function clearOutput() {
+            document.getElementById('output').innerHTML = '';
+        }
+
+        function getJoke() {
+            clearOutput();
+            fetch('https://v2.jokeapi.dev/joke/Any?type=single')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('output').innerHTML = `<p class="message-box">${data.joke}</p>`;
+                });
+        }
+        
+        function getCuteAnimal() {
+            clearOutput();
+            fetch('https://api.thecatapi.com/v1/images/search')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('output').innerHTML = `<img src="${data[0].url}" class="img-fluid rounded" alt="Cute Animal">`;
+                });
+        }
+        
+        function showMessage() {
+            clearOutput();
+            const messages = [
+                "You are amazing! 😊", 
+                "You’re stronger than you think! 💪", 
+                "The world is better with you in it! 🌍",
+                "Smile, because you deserve happiness! 😊"
+            ];
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            document.getElementById('output').innerHTML = `<p class="message-box">${randomMessage}</p>`;
+        }
+        
+        function showHug() {
+            clearOutput();
+            document.getElementById('output').innerHTML = `<img src="https://media.giphy.com/media/od5H3PmEG5EVq/giphy.gif" alt="Hug"><p class="mt-2 message-box">You are loved! 💖</p>`;
+        }
+        
+        function surpriseMe() {
+            const functions = [getJoke, getCuteAnimal, showMessage, showHug];
+            const randomFunction = functions[Math.floor(Math.random() * functions.length)];
+            randomFunction();
+        }
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
